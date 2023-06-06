@@ -1,0 +1,19 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "RSS agrigator",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jekaterina111/frontend-project-11.git"
+  },
+  "author": "Jekaterina Sutovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jekaterina111/frontend-project-11/issues"
+  },
+  "homepage": "https://github.com/Jekaterina111/frontend-project-11#readme"
+}
