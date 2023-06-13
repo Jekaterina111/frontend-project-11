@@ -1,47 +1,40 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import path from 'path';
-const isProduction = process.env.NODE_ENV == 'production';
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-
-const config = {
-    entry: './src/index.js',
-    output: {
-        path: path.resolve(dirname, 'dist'),
-    },
-    devServer: {
-        open: true,
-        host: 'localhost',
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: 'index.html',
-        }),
+module.exports = {
+  mode: process.env.NODE_ENV || 'development',
+  entry: path.resolve(__dirname, './src/index.js'),
+  output: {
+    filename: "[name].[contenthash].js",
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+  },
+  devServer: {
+    open: true,
+    host: 'localhost',
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+        type: 'asset',
+      },
+      { test: /\.css$/, 
+        use: [MiniCssExtractPlugin.loader, 'css-loader'] },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader'],
+      },
     ],
-    module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/i,
-                loader: 'babel-loader',
-            },
-            {
-                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-                type: 'asset',
-            },
-
-            // Add your rules for custom modules here
-            // Learn more about loaders from https://webpack.js.org/loaders/
-        ],
-    },
-};
-
-export default () => {
-    if (isProduction) {
-        config.mode = 'production';
-        
-        
-    } else {
-        config.mode = 'development';
-    }
-    return config;
+  },
 };

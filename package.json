@@ -2,15 +2,17 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "RSS agrigator",
-  "type": "module",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Jekaterina111/frontend-project-11.git"
   },
+  "keywords": [
+    "RSS"
+  ],
   "author": "Jekaterina Sutovic",
   "license": "ISC",
   "bugs": {
@@ -19,10 +21,12 @@
   "homepage": "https://github.com/Jekaterina111/frontend-project-11#readme",
   "devDependencies": {
     "css-loader": "^6.8.1",
+    "css-minimizer-webpack-plugin": "^5.0.1",
     "eslint": "^8.42.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
     "html-webpack-plugin": "^5.5.1",
+    "mini-css-extract-plugin": "^2.7.6",
     "postcss-loader": "^7.3.2",
     "sass": "^1.62.1",
     "sass-loader": "^13.3.1",
