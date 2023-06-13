@@ -31,10 +31,10 @@ module.exports = {
       },
       { test: /\.css$/, 
         use: [MiniCssExtractPlugin.loader, 'css-loader'] },
-      {
-        test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader'],
-      },
     ],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new CssMinimizerPlugin()],
   },
 };
