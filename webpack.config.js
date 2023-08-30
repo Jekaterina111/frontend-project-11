@@ -3,16 +3,21 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const isProduction = process.env.NODE_ENV == 'production';
-
+const isProduction = process.env.NODE_ENV === 'production';
 
 const config = {
-    entry: './src/index.js',
+    entry: {
+        main: './src/index.js'
+    },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+      filename: '[name].[contenthash].js',
+      assetModuleFilename: 'asset/[hash][ext][query]',
+      path: path.resolve(__dirname, 'dist'),
+      clean: true,
     },
     devServer: {
         open: true,
+        static: path.resolve(__dirname, 'dist'),
         host: 'localhost',
     },
     plugins: [
@@ -26,15 +31,9 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                  loader: 'babel-loader',
-                  options: {
-                    presets: ['@babel/preset-env'],
-                  },
-                },
-            },
+                test: /\.(js|jsx)$/i,
+                loader: 'babel-loader',
+              },
             { test: /\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'] },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,

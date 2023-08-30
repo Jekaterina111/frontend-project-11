@@ -39,6 +39,7 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "babel-loader": "^9.1.3",
     "bootstrap": "^5.3.1"
   }
 }
