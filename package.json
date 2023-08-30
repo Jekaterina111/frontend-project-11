@@ -25,6 +25,11 @@
   },
   "homepage": "https://github.com/Jekaterina111/frontend-project-11#readme",
   "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^9.1.3",
     "css-loader": "^6.8.1",
     "eslint": "^8.48.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -39,7 +44,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "babel-loader": "^9.1.3",
     "bootstrap": "^5.3.1"
   }
 }
