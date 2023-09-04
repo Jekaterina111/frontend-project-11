@@ -2,26 +2,18 @@ import * as yup from 'yup';
 import i18next from 'i18next';
 import axios from 'axios';
 import _ from 'lodash';
-import watch from './view.js';
+import watch, { renderContent } from './view.js';
 import resources from './locales/index.js';
 import parse from './parser.js';
 
 const validUrl = (url, haveUrl) => {
   const schema = yup.string()
     .trim()
-    .url()
-    .notOneOf(haveUrl)
-    .required();
+    .url('invalidRss')
+    .notOneOf(haveUrl, 'alreadyExist')
+    .required('emptyField');
   return schema.validate(url);
 };
-
-yup.setLocale({
-  string: {
-    notOneOf: i18next.t('errors.validation.alreadyExist'),
-    url: i18next.t('errors.validation.invalidUrl'),
-    required: i18next.t('errors.validation.emptyField'),
-  },
-});
 
 const getOriginsProxy = (urlLink) => {
   const originsProxy = 'https://allorigins.hexlet.app/get';
@@ -58,21 +50,28 @@ export default () => {
 
   const i18nInstance = i18next.createInstance();
   i18nInstance
-    .init({
-      lng: defaultLanguege,
-      debug: false,
-      resources,
-    });
+  .init({
+    lng: defaultLanguege,
+    debug: false,
+    resources,
+  });
 
+  yup.setLocale({
+    string: {
+      notOneOf: 'errors.validation.alreadyExist',
+      url: 'errors.validation.invalidUrl',
+      required: 'errors.validation.emptyField',
+    },
+  });
+  
   const state = {
     lng: defaultLanguege,
-    processState: 'initialized',
+    valid: 'true',
     form: {
       processState: 'filling',
       error: null,
     },
     uiState: {
-      feedback: null,
       readPostId: [],
     },
     data: {
@@ -90,11 +89,17 @@ export default () => {
     postsBtn: document.querySelectorAll('[data-bs-toggle="modal"]'),
     feeds: document.querySelector('.feeds'),
     input: document.querySelector('.form-control'),
+    label: document.querySelector('.rss-form label'),
     feedback: document.querySelector('.feedback'),
     modal: document.querySelector('#modal'),
     body: document.querySelector('.modal-body'),
     footer: document.querySelector('.modal-footer'),
+    greeting: document.querySelector('.lead'),
+    sample: document.querySelector('.mt-2'),
   };
+
+ renderContent(elements, i18nInstance);
+
   const watchedState = watch(state, elements, i18nInstance);
   updateRss(watchedState.data.feeds);
 
@@ -106,8 +111,8 @@ export default () => {
 
     validUrl(link, watchedState.haveUrl)
       .then(() => {
-        watchedState.form.processState = 'validated';
-        watchedState.processState = 'loading';
+        watchedState.valid = true;
+        watchedState.form.processState = 'loading';
         return getOriginsProxy(link);
       })
       .then((res) => {
@@ -122,29 +127,16 @@ export default () => {
         const postId = _.uniqueId();
         const extractPost = posts.map((post) => ({ ...post, feedId, id: postId }));
         watchedState.data.posts.push(...extractPost);
-        watchedState.processState = 'loaded';
-        watchedState.uiState.feedback = 'success';
-        watchedState.form.processState = 'filling';
+        watchedState.form.processState = 'loaded';
       })
-      .catch((err) => {
-        if (err.name === 'ValidationError') {
-          const [errorCode] = err.errors;
-          watchedState.form.processState = 'invalidated';
-          watchedState.uiState.feedback = errorCode;
-        } else if (err.name === 'AxiosError') {
-          if (err.message === 'Network Error') {
-            watchedState.processState = 'networkError';
-            watchedState.uiState.feedback = 'errors.validation.network';
-          }
-        } else if (err.name === 'Error') {
-          if (err.message === 'Parser Error') {
-            watchedState.processState = 'invalidError';
-            watchedState.uiState.feedback = 'errors.validation.invalidRss';
-          }
-        } else {
-          throw new Error(`Unknown error ${err}`);
-        }
-        console.error(err.message);
+      .catch((validationError) => {
+        console.log(validationError);
+            const err = validationError.errors[0]
+            console.log(err)
+            watchedState.valid = false;
+            watchedState.form.error = err;
+            watchedState.form.processState = 'error';
+          
       });
   });
 };

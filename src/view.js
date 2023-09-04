@@ -1,77 +1,70 @@
 import onChange from 'on-change';
 
-export default (state, elements, i18nInstance) => {
-    const {
-      form,
-      input,
-      submitButton,
-      feedback,
-      feeds,
-      posts,
-    } = elements;
-  
-    const generateStateControl = (processState) => {
+    const renderContent = (elements, i18nInstance) => {
+      const {
+        mainTitle,
+        greeting,
+        label,
+        sample,
+        submitButton,
+      } = elements;
+
+    mainTitle.textContent = i18nInstance.t('mainTitle');
+    greeting.textContent = i18nInstance.t('greeting');
+    label.textContent = i18nInstance.t('label');
+    submitButton.textContent = i18nInstance.t('form.submit');
+    sample.textContent = i18nInstance.t('sample');
+    };
+    
+    const handleSusscess = (elements, i18nInstance) => {
+      elements.feedback.classList.add('text-success');
+      elements.feedback.classList.remove('text-danger');
+      elements.input.classList.remove('is-invalid');
+      elements.feedback.textContent = i18nInstance.t('success');
+      elements.form.reset();
+      elements.input.focus();
+    };
+
+    const generateStateControl = (elements, processState, watchedState, i18nInstance) => {
+      const { feedback, submitButton } = elements;
       switch (processState) {
         case 'loaded':
-          submitButton.setAttribute('type', 'submit');
           submitButton.classList.remove('disabled');
-          form.reset();
-          input.focus();
+          handleSusscess(elements, i18nInstance);
+          break;
+
+        case 'filling':
+          submitButton.classList.add('disabled');
+          break;
+
+        case 'error':
+          submitButton.classList.add('disabled');
+          handleErrors(elements, watchedState.form.error, i18nInstance);
           break;
         case 'loading':
           submitButton.classList.add('disabled');
-          break;
-        case 'networkError':
-        case 'invalidError':
-          submitButton.classList.remove('disabled');
-          submitButton.setAttribute('type', '');
-          break;
-        default:
-          break;
-      }
-    };
-  
-    const generateFormControl = (formProcessState) => {
-      switch (formProcessState) {
-        case 'filling':
-          submitButton.classList.remove('disabled');
-          break;
-        case 'validating':
-          submitButton.classList.add('disabled');
-          break;
-        case 'validated':
-          submitButton.classList.remove('disabled');
-          input.classList.remove('is-invalid');
-          break;
-        case 'invalidated':
-          submitButton.classList.remove('disabled');
-          input.classList.add('is-invalid');
-          break;
-        default:
-          break;
-      }
-    };
-    const handleErrors = (value) => {
-      feedback.textContent = i18nInstance.t(value);
-      switch (value) {
-        case 'success':
-          feedback.classList.remove('text-danger');
+          feedback.textContent = i18nInstance.t('loading');
           feedback.classList.add('text-success');
-          break;
-        case 'errors.validation.alreadyExist':
-        case 'errors.validation.invalidUrl':
-        case 'errors.validation.invalidRss':
-        case 'errors.validation.emptyField':
-        case 'errors.validation.network':
-          feedback.classList.remove('text-success');
-          feedback.classList.add('text-danger');
+          feedback.classList.remove('text-danger');
           break;
         default:
-          throw new Error(`Unknow ${value}`);
+          throw new Error(`unknow ${processState}`);
       }
     };
   
-    const renderFeeds = (values) => {
+    const handleErrors = (elements, error, i18nInstance) => {
+      const { feedback, input } = elements;
+      feedback.classList.add('text-danger');
+      feedback.classList.remove('text-success');
+      input.classList.add('is-invalid');
+      feedback.textContent = i18nInstance.t(`errors.validation.${error}`);
+     if (error === 'Network Error') {
+       feedback.textContent = i18nInstance.t('errors.validation.network');
+    }  
+    };
+  
+    const renderFeeds = (elements, values, i18nInstance) => {
+      const { feeds } = elements;
       const div = document.createElement('div');
       div.classList.add('card', 'border-0');
   
@@ -108,7 +101,8 @@ export default (state, elements, i18nInstance) => {
       feeds.append(div);
     };
   
-    const renderPost = (values) => {
+    const renderPost = (elements, values, i18nInstance, watchedState) => {
+      const { posts } = elements;
       const div = document.createElement('div');
       div.classList.add('card', 'border-0');
   
@@ -149,29 +143,37 @@ export default (state, elements, i18nInstance) => {
         li.append(a, btn);
         ul.prepend(li);
       });
+      
       div1.append(h3);
       div.append(div1, ul);
       posts.innerHTML = '';
       posts.append(div);
     };
-  
+  export { renderContent };
+
+  export default (state, elements, i18nInstance) => {
     const watchedState = onChange(state, (path, value) => {
       switch (path) {
-        case 'processState':
-          generateStateControl(value);
-          break;
+         case 'valid':
+           elements.submitButton.disabled = !value;
+           break;
+
         case 'form.processState':
-          generateFormControl();
+          generateStateControl(elements, value, watchedState, i18nInstance);
           break;
-        case 'uiState.feedback':
-          handleErrors(value);
+
+        case 'form.error':
+          handleErrors(elements, watchedState.form.error, i18nInstance);
           break;
+
         case 'data.feeds':
-          renderFeeds(value);
+          renderFeeds(elements, value, i18nInstance);
           break;
+          
         case 'data.posts':
-          renderPost(value);
+          renderPost(elements, value, i18nInstance, watchedState);
           break;
+
         default:
           break;
       }
