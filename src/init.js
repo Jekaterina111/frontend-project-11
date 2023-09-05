@@ -11,7 +11,7 @@ const validUrl = (url, haveUrl) => {
     .trim()
     .url('invalidRss')
     .notOneOf(haveUrl, 'alreadyExist')
-    .required('emptyField');
+    .required();
   return schema.validate(url);
 };
 
