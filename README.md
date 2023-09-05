@@ -4,7 +4,7 @@
 
 <div align="center">
 
-![My project](https://frontend-project-11-two-rho.vercel.app/)
+[My project](https://frontend-project-11-two-rho.vercel.app/)
 
 </div>
 
@@ -18,7 +18,7 @@
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
 [![i18next](/assets/i18next2.jpg)](https://www.i18next.com//)
 [![yup](/assets/yup2.png)](https://github.com/jquense/yup)
-[![vercel](/assets/yup.png)](https://vercel.com/)
+[![vercel](/assets/vercel.png)](https://vercel.com/)
 
 </div>
 
