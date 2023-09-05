@@ -1,15 +1,15 @@
 # RSS-READER
-...
-Description RSS - is a specialized format for describing news feeds, article announcements, and other materials. This is the easiest way for websites (usually blogs) to allow users to subscribe to changes. For this, special services called RSS aggregators are used. These services are able to poll the RSS feeds of sites for new posts and display them in a convenient way, marking what they have read and so on.
-...
+
+> Description RSS - is a specialized format for describing news feeds, article announcements, and other materials. This is the easiest way for websites (usually blogs) to allow users > to subscribe to changes. For this, special services called RSS aggregators are used. These services are able to poll the RSS feeds of sites for new posts and display them in a > > > convenient way, marking what they have read and so on.
+
 
 ### Hexlet tests and linter status:
 
-[My project](/assets/vercel.png "My Project")(https://frontend-project-11-two-rho.vercel.app)
+[![My project](/assets/vercel.png)](https://frontend-project-11-two-rho.vercel.app)
 
 
 ### Tech stack:<br>
-[![JavaScript](https://img.shields.io/badge/--F7DF1E?logo=javascript&logoColor=000)](https://www.javascript.com/)
+[![JavaScript](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Djavascript%2BLogo&psig=AOvVaw0h5rXL1DhaQIh5qxZjCZJe&ust=1694015795087000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCJjx6t_qk4EDFQAAAAAdAAAAABAE)](https://www.javascript.com/)
 
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
