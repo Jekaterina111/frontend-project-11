@@ -3,8 +3,8 @@
 > Description RSS - is a specialized format for describing news feeds, article announcements, and other materials. This is the easiest way for websites (usually blogs) to allow users > to subscribe to changes. For this, special services called RSS aggregators are used. These services are able to poll the RSS feeds of sites for new posts and display them in a > > > convenient way, marking what they have read and so on.
 
 <div align="center">
-## Press here
-[![My project](/assets/vercel.png)](https://frontend-project-11-two-rho.vercel.app/)
+
+![My project](https://frontend-project-11-two-rho.vercel.app/)
 
 </div>
 
@@ -13,11 +13,12 @@
 ### Tech stack:
 <div align="center">
 
-[![JavaScript](/assets/JavaScript-logo.png)](https://www.javascript.com/)
+[![JavaScript](/assets/JavaScript.png)](https://www.javascript.com/)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
-[![i18next](/assets/i18next.jpg)](https://www.i18next.com//)
-[![yup](/assets/yup.png)](https://github.com/jquense/yup)
+[![i18next](/assets/i18next2.jpg)](https://www.i18next.com//)
+[![yup](/assets/yup2.png)](https://github.com/jquense/yup)
+[![vercel](/assets/yup.png)](https://vercel.com/)
 
 </div>
 
