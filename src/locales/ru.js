@@ -22,6 +22,7 @@ export default {
         alreadyExist: 'RSS уже существует',
         invalidRss: 'Ресурс не содержит валидный RSS',
         network: 'Ошибка сети',
+        empty: 'Не должно быть пустым',
       },
     },
   },
