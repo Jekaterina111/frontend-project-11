@@ -9,7 +9,7 @@ import parse from './parser.js';
 const validUrl = (url, haveUrl) => {
   const schema = yup.string()
     .trim()
-    .url('invalidRss')
+    .url('validUrl')
     .notOneOf(haveUrl, 'alreadyExist')
     .required('empty');
   return schema.validate(url);
