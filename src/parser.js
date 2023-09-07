@@ -7,7 +7,7 @@ export default (contents) => {
     const error = new Error(errorNode.textContent);
     error.isParsingError = true;
     error.contents = contents;
-    throw new Error('invalidUrl');
+    throw new Error('invalidRss');
   }
 
   const channel = doc.querySelector('channel');

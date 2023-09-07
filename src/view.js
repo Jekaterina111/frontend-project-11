@@ -26,14 +26,17 @@ const handleSusscess = (elements, i18nInstance) => {
 };
 
 const handleErrors = (elements, error, i18nInstance) => {
-  const { feedback, input } = elements;
+  const { feedback, input, submitButton } = elements;
   feedback.classList.add('text-danger');
   feedback.classList.remove('text-success');
-  input.classList.add('is-invalid');
   feedback.textContent = i18nInstance.t(`errors.validation.${error}`);
   if (error === 'Network Error') {
+    input.classList.add('is-invalid');
     feedback.textContent = i18nInstance.t('errors.validation.network');
   }
+
+  submitButton.disabled = false;
+  input.disabled = false;
 };
 
 const generateStateControl = (elements, processState, watchedState, i18nInstance) => {
@@ -49,7 +52,7 @@ const generateStateControl = (elements, processState, watchedState, i18nInstance
       break;
 
     case 'error':
-      submitButton.classList.remove('disabled');
+      submitButton.classList.add('disabled');
       handleErrors(elements, watchedState.form.error, i18nInstance);
       break;
 

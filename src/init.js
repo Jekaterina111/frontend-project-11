@@ -9,7 +9,7 @@ import parse from './parser.js';
 const validUrl = (url, haveUrl) => {
   const schema = yup.string()
     .trim()
-    .url('validUrl')
+    .url()
     .notOneOf(haveUrl, 'alreadyExist')
     .required('empty');
   return schema.validate(url);
@@ -20,7 +20,6 @@ const getOriginsProxy = (urlLink) => {
   const rssUrl = new URL(originsProxy);
   rssUrl.searchParams.set('disableCache', 'true');
   rssUrl.searchParams.set('url', urlLink);
-  console.log(rssUrl);
   return axios.get(rssUrl);
 };
 
@@ -38,7 +37,7 @@ const updateRss = (feeds) => {
         posts.push(...updatedPosts);
         return updatedPosts;
       })
-      .catch((err) => console.error(err.message)));
+      .catch((e) => console.error(e.message)));
   Promise.allSettled(promises)
     .finally(() => {
       setTimeout(() => updateRss(feeds), 5000);
@@ -58,9 +57,9 @@ export default () => {
 
   yup.setLocale({
     string: {
-      notOneOf: 'errors.validation.alreadyExist',
-      url: 'errors.validation.invalidUrl',
-      required: 'errors.validation.emptyField',
+      notOneOf: 'alreadyExist',
+      url: 'invalidUrl',
+      required: 'empty',
     },
   });
 
@@ -69,7 +68,7 @@ export default () => {
     valid: 'true',
     form: {
       processState: 'filling',
-      error: null,
+      error: '',
     },
     uiState: {
       readPostId: [],
@@ -119,9 +118,6 @@ export default () => {
         const content = res.data.contents;
         watchedState.haveUrl.push(link);
         const { feed, posts } = parse(content);
-        if (!feed || !posts) {
-          throw new Error('Parser Error');
-        }
         const feedId = _.uniqueId();
         watchedState.data.feeds.push({ ...feed, id: feedId, link });
         const postId = _.uniqueId();
@@ -129,11 +125,9 @@ export default () => {
         watchedState.data.posts.push(...extractPost);
         watchedState.form.processState = 'loaded';
       })
-      .catch((ValidationError) => {
-        console.log(ValidationError);
-        const err = ValidationError.errors[0];
+      .catch((error) => {
         watchedState.valid = false;
-        watchedState.form.error = err;
+        watchedState.form.error = error.message ?? 'invalidRss';
         watchedState.form.processState = 'error';
       });
   });

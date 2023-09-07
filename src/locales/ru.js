@@ -23,7 +23,7 @@ export default {
         invalidRss: 'Ресурс не содержит валидный RSS',
         network: 'Ошибка сети',
         empty: 'Не должно быть пустым',
-        validUrl: 'Ссылка должна быть валидным URL',
+        invalidUrl: 'Ссылка должна быть валидным URL',
       },
     },
   },
