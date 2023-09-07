@@ -50,11 +50,11 @@ export default () => {
 
   const i18nInstance = i18next.createInstance();
   i18nInstance
-  .init({
-    lng: defaultLanguege,
-    debug: false,
-    resources,
-  });
+    .init({
+      lng: defaultLanguege,
+      debug: false,
+      resources,
+    });
 
   yup.setLocale({
     string: {
@@ -63,7 +63,7 @@ export default () => {
       required: 'errors.validation.emptyField',
     },
   });
-  
+
   const state = {
     lng: defaultLanguege,
     valid: 'true',
@@ -98,7 +98,7 @@ export default () => {
     sample: document.querySelector('.mt-2'),
   };
 
- renderContent(elements, i18nInstance);
+  renderContent(elements, i18nInstance);
 
   const watchedState = watch(state, elements, i18nInstance);
   updateRss(watchedState.data.feeds);
@@ -129,14 +129,12 @@ export default () => {
         watchedState.data.posts.push(...extractPost);
         watchedState.form.processState = 'loaded';
       })
-      .catch((validationError) => {
-        console.log(validationError);
-            const err = validationError.errors[0]
-            console.log(err)
-            watchedState.valid = false;
-            watchedState.form.error = err;
-            watchedState.form.processState = 'error';
-          
+      .catch((ValidationError) => {
+        console.log(ValidationError);
+        const err = ValidationError.errors[0];
+        watchedState.valid = false;
+        watchedState.form.error = err;
+        watchedState.form.processState = 'error';
       });
   });
 };

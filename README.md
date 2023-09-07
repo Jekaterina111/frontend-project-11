@@ -1,6 +1,7 @@
 # RSS-READER
 
-> Description RSS - is a specialized format for describing news feeds, article announcements, and other materials. This is the easiest way for websites (usually blogs) to allow users > to subscribe to changes. For this, special services called RSS aggregators are used. These services are able to poll the RSS feeds of sites for new posts and display them in a > > > convenient way, marking what they have read and so on.
+> Description RSS - is a specialized format for describing news feeds, article announcements, and other materials. This is the easiest way for websites (usually blogs) to allow users > to subscribe to changes. For this, special services called RSS aggregators are used. These services are able to poll the RSS feeds of sites for new posts and display them in a  
+> convenient way, marking what they have read and so on.
 
 <div align="center">
 
