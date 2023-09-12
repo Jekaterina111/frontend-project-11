@@ -37,7 +37,7 @@ const updateRss = (feeds) => {
         posts.push(...updatedPosts);
         return updatedPosts;
       })
-      .catch((e) => console.error(e.message)));
+      .catch((e) => (e.message)));
   Promise.allSettled(promises)
     .finally(() => {
       setTimeout(() => updateRss(feeds), 5000);
@@ -45,7 +45,7 @@ const updateRss = (feeds) => {
 };
 
 export default () => {
-  const defaultLanguege = 'ru';
+  const defaultLanguege = 'en';
 
   const i18nInstance = i18next.createInstance();
   i18nInstance
@@ -120,8 +120,7 @@ export default () => {
         const { feed, posts } = parse(content);
         const feedId = _.uniqueId();
         watchedState.data.feeds.push({ ...feed, id: feedId, link });
-        const postId = _.uniqueId();
-        const extractPost = posts.map((post) => ({ ...post, feedId, id: postId }));
+        const extractPost = posts.map((post) => ({ ...post, feedId, id: _.uniqueId() }));
         watchedState.data.posts.push(...extractPost);
         watchedState.form.processState = 'loaded';
       })

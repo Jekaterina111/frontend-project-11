@@ -1,5 +1,29 @@
 import onChange from 'on-change';
 
+const languages = ['en', 'ru'];
+
+const handleSwitchLanguage = (state) => (evt) => {
+  const { lng } = evt.target.dataset;
+
+  state.lng = lng;
+};
+
+const renderButtons = (watchedState, i18nInstance) => {
+  const lngToggler = document.querySelector('.btn-group');
+  lngToggler.setAttribute('role', 'group');
+  lngToggler.innerHTML = '';
+  languages.forEach((lng) => {
+    const button = document.createElement('button');
+    button.setAttribute('type', 'button');
+    const className = watchedState.lng === lng ? 'btn-primary' : 'btn-outline-primary';
+    button.classList.add('btn', 'mb-3', className);
+    button.setAttribute('data-lng', lng);
+    button.textContent = i18nInstance.t(`languages.${lng}`);
+    button.addEventListener('click', handleSwitchLanguage(watchedState));
+    lngToggler.appendChild(button);
+  });
+};
+
 const renderContent = (elements, i18nInstance) => {
   const {
     mainTitle,
@@ -133,7 +157,7 @@ const renderPost = (elements, values, i18nInstance, watchedState) => {
     a.classList.add('fw-bold');
     a.setAttribute('href', link);
     a.setAttribute('target', 'blank');
-    a.setAttribute('rel', 'noopener noreferrer');
+    a.setAttribute('rel', 'nofollow noopener noreferrer');
     a.dataset.id = post.id;
     a.textContent = title;
 
@@ -175,8 +199,8 @@ const havedReadPost = (readPostId) => {
 
   postsList.forEach((a) => {
     if (readPost.has(a.dataset.id)) {
-      a.classList.add('fw-normal', 'link-secondary');
-      a.classList.remove('fw-bold');
+      a.classList.replace('fw-bold', 'fw-normal');
+      a.classList.add('link-secondary');
     }
   });
 };
@@ -186,6 +210,10 @@ export { renderContent };
 export default (state, elements, i18nInstance) => {
   const watchedState = onChange(state, (path, value) => {
     switch (path) {
+      case 'lng': i18nInstance.changeLanguage(value).then(() => renderButtons(watchedState, i18nInstance));
+        renderContent(elements, i18nInstance);
+        break;
+
       case 'valid':
         elements.submitButton.disabled = !value;
         break;
@@ -215,5 +243,6 @@ export default (state, elements, i18nInstance) => {
         break;
     }
   });
+  renderButtons(watchedState, i18nInstance);
   return watchedState;
 };

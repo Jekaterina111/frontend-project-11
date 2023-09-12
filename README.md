@@ -28,3 +28,20 @@
 [![Actions Status](https://github.com/Jekaterina111/frontend-project-11/workflows/hexlet-check/badge.svg)](https://github.com/Jekaterina111/frontend-project-11/actions)
 
 </div>
+
+## Installation
+
+1. Clone the repository (via SSH / HTTPS / GitHub CLI):
+```
+$ git clone <link>
+```
+
+2. Change the working directory:
+```
+$ cd frontend-project-11
+```
+
+3. Install dependencies:
+```
+$ make install
+```
