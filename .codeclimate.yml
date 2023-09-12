@@ -1,7 +1,6 @@
-checks:
-  similar-code:
+plugins:
+  duplication:
+    enabled: true
     config:
-      threshold: 25
-  identical-code:
-    config:
-      threshold: 50
+      languages:
+      - javascript:
