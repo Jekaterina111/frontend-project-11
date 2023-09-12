@@ -2,7 +2,7 @@ export default {
   translation: {
     languages: {
       en: 'English',
-      ru: 'Русский',
+      ru: 'Russian',
     },
     form: {
       submit: 'Add',
