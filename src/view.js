@@ -214,10 +214,6 @@ export default (state, elements, i18nInstance) => {
         renderContent(elements, i18nInstance);
         break;
 
-      case 'valid':
-        elements.submitButton.disabled = !value;
-        break;
-
       case 'form.processState':
         generateStateControl(elements, value, watchedState, i18nInstance);
         break;

@@ -45,7 +45,7 @@ const updateRss = (feeds) => {
 };
 
 export default () => {
-  const defaultLanguege = 'en';
+  const defaultLanguege = 'ru';
 
   const i18nInstance = i18next.createInstance();
   i18nInstance
