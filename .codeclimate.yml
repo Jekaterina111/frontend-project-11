@@ -4,3 +4,4 @@ plugins:
     config:
       languages:
       - javascript:
+        mass_threshold: 100
