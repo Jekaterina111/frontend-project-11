@@ -1,7 +1,8 @@
-plugins:
-  duplication:
-    enabled: true
+checks:
+  identical-code:
     config:
-      languages:
-      - javascript:
-        mass_threshold: 100
+      threshold: 100
+  similar-code:
+    config:
+      threshold: 100
+      
