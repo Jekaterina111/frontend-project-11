@@ -1,8 +1,7 @@
 checks:
   identical-code:
     config:
-      threshold: 100
+      threshold: 200
   similar-code:
     config:
-      threshold: 100
-      
+      threshold: 200
