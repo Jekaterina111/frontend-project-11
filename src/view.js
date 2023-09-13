@@ -50,7 +50,7 @@ const handleSusscess = (elements, i18nInstance) => {
 };
 
 const handleErrors = (elements, error, i18nInstance) => {
-  const { feedback, input, submitButton } = elements;
+  const { feedback, input } = elements;
   feedback.classList.add('text-danger');
   feedback.classList.remove('text-success');
   feedback.textContent = i18nInstance.t(`errors.validation.${error}`);
